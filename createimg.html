@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>每日一题海报生成</title>
+  <style>
+    a{
+      font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    标题： <input type="text" id="input">
+  </div>
+  <div>
+    <button id="create">海报生成</button>
+  </div>
+  <canvas id="canvas" width="900" height="383"></canvas>
+  <script>
+    let canvas = document.querySelector('#canvas')
+    let create = document.querySelector('#create')
+    let input = document.querySelector('#input')
+    let ctx = canvas.getContext('2d')
+    // let oldWidth = canvas.width
+    // let oldHeight = canvas.height
+    // let scaleRatio = window.devicePixelRatio
+
+    // canvas.width = Math.round(oldWidth * scaleRatio)
+    // canvas.height = Math.round(oldHeight * scaleRatio)
+    // canvas.style.width = oldWidth + 'px'
+    // canvas.style.height = oldHeight + 'px'
+    // ctx.scale(scaleRatio, scaleRatio)
+    // ctx.translate(-0.5, -0.5)
+
+    var cw = 900
+    var ch = 383
+    var fontSize = 40
+    create.addEventListener('click', () => {
+      if(!input.value) {
+        alert('请输入文字')
+        return
+      }
+      var img = new Image()
+      img.onload = () => {
+        ctx.drawImage(img, 0, 0, cw, ch + 2)
+        ctx.font = `${fontSize}px PingFangSC-Light, ingfang, STheiti, SimHei, sans-serif`;
+        let t1 = '每日一道算法题'
+        let t2 = input.value
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText(t1, (cw - (t1.length * fontSize)) / 2, 130)
+        
+        
+        ctx.fillStyle = '#FAF9D2';
+        ctx.fillText(t2, (cw - (t2.length * fontSize)) / 2, 220)
+        // toImage
+        var dataImg = new Image()
+        dataImg.src = canvas.toDataURL('image/jpeg')
+        document.body.appendChild(dataImg)
+      }
+      img.crossOrigin = 'anonymous'
+      img.src = 'https://cdn.jsdelivr.net/gh/naihe138/myimages/img/1.png?' + (+new Date())
+    })
+  </script>
+</body>
+</html>
